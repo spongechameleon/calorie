@@ -1,10 +1,26 @@
 <script lang="ts">
-	import Main from './screens/Main.svelte'
+	import { onMount } from "svelte";
+	import { SvelteToast } from "@zerodevx/svelte-toast";
+	import { getGoal } from "./actions/goal";
+	import { getMeals } from "./actions/meal";
+
+	import Main from "./screens/Main.svelte";
+	import { mkDateString } from "./types";
+
+	let toastOptions = {};
+
+	// load goal, meal history
+	onMount(() => {
+		getGoal();
+		getMeals(mkDateString());
+	});
 </script>
 
 <main>
 	<Main />
 </main>
+
+<SvelteToast options={toastOptions} />
 
 <style>
 	main {

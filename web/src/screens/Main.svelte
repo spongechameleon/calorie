@@ -2,22 +2,10 @@
   import History from "../components/History.svelte";
   import New from "../components/New.svelte";
   import Overview from "../components/Overview.svelte";
-  import { mealsS } from "../stores";
-  import type { Meal } from "../types";
-
-  let goal = {
-    calories: 2500,
-    protein: 200,
-  };
-
-  let meals: Meal[];
-  mealsS.subscribe((v) => {
-    meals = v;
-  });
 </script>
 
 <section>
-  <Overview {goal} {meals} />
+  <Overview />
 </section>
 
 <section>
@@ -25,7 +13,7 @@
 </section>
 
 <section>
-  <History {meals} />
+  <History />
 </section>
 
 <style>

@@ -1,27 +1,17 @@
 <script lang="ts">
   import { addNewMeal } from "../actions/meal";
-  import { mealsS } from "../stores";
 
-  import type { Meal } from "../types";
-  import { mkMeal } from "../types";
+  import type { MealDto } from "../types";
+  import { mkMealDto } from "../types";
 
-  let newMeal: Meal = mkMeal();
-
-  let error: string;
+  let newMealDto: MealDto = mkMealDto();
 
   let handleSubmit = async () => {
-    const r = await addNewMeal(newMeal);
+    const r = await addNewMeal(newMealDto);
     if (r.ok) {
-      // push r.value to meal history
-      mealsS.update((meals) => {
-        meals.push(r.value);
-        return meals;
-      });
       // reset newMeal
-      newMeal = mkMeal();
+      newMealDto = mkMealDto();
     }
-    // display r.err
-    error = r.err;
   };
 </script>
 
@@ -32,7 +22,7 @@
     <input
       type="text"
       name="newMeal.name"
-      bind:value={newMeal.name}
+      bind:value={newMealDto.name}
       id="new-meal-name"
     />
   </label>
@@ -41,7 +31,7 @@
     <input
       type="number"
       name="newMeal.calories"
-      bind:value={newMeal.calories}
+      bind:value={newMealDto.calories}
       id="new-meal-calories"
     />
   </label>
@@ -50,15 +40,12 @@
     <input
       type="number"
       name="newMeal.protein"
-      bind:value={newMeal.protein}
+      bind:value={newMealDto.protein}
       id="new-meal-protein"
     />
   </label>
   <input type="submit" value="Add Meal" />
 </form>
-{#if error}
-  <p>{error}</p>
-{/if}
 
 <style>
 </style>

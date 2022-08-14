@@ -1,5 +1,6 @@
 export const API = {
   routes: {
-    meal: "somewhere"
+    goal: "somewhere",
+    meal: "somewhere else"
   }
 }

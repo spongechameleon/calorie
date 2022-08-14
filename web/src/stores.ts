@@ -1,4 +1,6 @@
 import { Writable, writable } from "svelte/store";
-import type { Meal } from "./types";
+import type { Goal, Meal } from "./types";
 
 export const mealsS: Writable<Meal[]> = writable([])
+
+export const goalS: Writable<Goal> = writable({ calories: 0, protein: 0 })
