@@ -58,3 +58,33 @@ export function lsAddNewMeal(mealDto: MealDto): Result {
   tSuccess("Meal added")
   return { ok: true }
 }
+
+export function lsUpdateMeal(meal: Meal): Result {
+  let ok = true
+  mealsS.update(meals => {
+    const i = meals.findIndex(m => m.id === meal.id)
+    if (i === -1) {
+      ok = false
+    } else {
+      meals[i] = meal
+      window.localStorage.setItem("calorie_meals", JSON.stringify(meals))
+    }
+    return meals
+  })
+  return { ok }
+}
+
+export function lsDeleteMeal(id: number): Result {
+  let ok = true
+  mealsS.update(meals => {
+    const i = meals.findIndex(m => m.id === id)
+    if (i === -1) {
+      ok = false
+    } else {
+      meals = meals.slice(0, i).concat(meals.slice(i + 1))
+      window.localStorage.setItem("calorie_meals", JSON.stringify(meals))
+    }
+    return meals
+  })
+  return { ok }
+}
