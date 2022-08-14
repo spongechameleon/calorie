@@ -9,6 +9,7 @@
     updateSavedMeal,
   } from "../actions/savedMeal";
   import Goal from "../components/Goal.svelte";
+  import { goToMain } from "../actions/page";
 
   let savedMeals: Meal[];
   savedMealsS.subscribe((v) => {
@@ -33,7 +34,7 @@
   <New title="New Meal" addMeal={addSavedMeal} autofillMeals={null} />
 </section>
 
-<button on:click={() => (window.location.pathname = "/")}>Main</button>
+<button on:click={goToMain}>Main</button>
 
 <style>
 </style>

@@ -4,9 +4,9 @@
   import Overview from "../components/Overview.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
   import { addMeal, deleteMeal, updateMeal } from "../actions/meal";
-
   import type { Meal } from "../types";
   import { mealsS, savedMealsS } from "../stores";
+  import { goToConfig } from "../actions/page";
 
   let meals: Meal[];
   mealsS.subscribe((v) => {
@@ -32,7 +32,7 @@
 </section>
 
 <button on:click={lsManualReset}>Reset data</button>
-<button on:click={() => (window.location.pathname = "/config")}>Config</button>
+<button on:click={goToConfig}>Config</button>
 
 <style>
   section {

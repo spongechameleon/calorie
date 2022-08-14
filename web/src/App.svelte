@@ -1,32 +1,27 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { SvelteToast } from "@zerodevx/svelte-toast";
-	import { getGoal } from "./actions/goal";
-	import { getMeals } from "./actions/meal";
-	import { getSavedMeals } from "./actions/savedMeal";
 
 	import Main from "./screens/Main.svelte";
 	import Config from "./screens/Config.svelte";
+	import { pageS } from "./stores";
+	import { PAGES } from "./actions/page";
+	import { initData } from "./actions/init";
 
 	let toastOptions = {};
-	let goToConfig = false;
 
-	onMount(() => {
-		getGoal();
-		getMeals();
-		getSavedMeals();
+	initData();
 
-		if (window.location.pathname === "/config") {
-			goToConfig = true;
-		}
+	let page = "main";
+	pageS.subscribe((v) => {
+		page = v;
 	});
 </script>
 
 <main>
-	{#if goToConfig}
-		<Config />
-	{:else}
+	{#if page === PAGES.main}
 		<Main />
+	{:else if page === PAGES.config}
+		<Config />
 	{/if}
 </main>
 
