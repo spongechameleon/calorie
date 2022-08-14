@@ -1,5 +1,6 @@
 import { goalS, mealsS } from "../../stores";
-import { DateString, Goal, Meal, MealDto, mkDateString, Result } from "../../types";
+import { mkDateString } from "../../types";
+import type { DateString, Goal, Meal, MealDto, Result } from "../../types";
 import { tSuccess } from "../toast";
 
 export function lsManualReset() {
@@ -27,7 +28,7 @@ export function lsGetMeals(date?: DateString): Result {
   const meals: Meal[] | null = JSON.parse(window.localStorage.getItem("calorie_meals"))
   mealsS.update(() => {
     // If the first meal was on a different day, reset!
-    if (meals === null || meals[0].date !== mkDateString()) {
+    if (meals === null || meals[0]?.date !== mkDateString()) {
       const def: Meal[] = []
       window.localStorage.setItem("calorie_meals", JSON.stringify(def))
       return def
