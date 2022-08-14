@@ -5,14 +5,13 @@
 	import { getMeals } from "./actions/meal";
 
 	import Main from "./screens/Main.svelte";
-	import { mkDateString } from "./types";
 
 	let toastOptions = {};
 
 	// load goal, meal history
 	onMount(() => {
 		getGoal();
-		getMeals(mkDateString());
+		getMeals();
 	});
 </script>
 

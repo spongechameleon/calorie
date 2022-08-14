@@ -1,8 +1,8 @@
-import type { DateString, MealDto, Result } from "../types";
+import type { MealDto, Result } from "../types";
 import { lsAddNewMeal, lsGetMeals } from "./persistence/localStorage";
 
-export async function getMeals(date: DateString): Promise<Result> {
-  return lsGetMeals(date)
+export async function getMeals(): Promise<Result> {
+  return lsGetMeals()
 }
 
 export async function addNewMeal(mealDto: MealDto): Promise<Result> {
