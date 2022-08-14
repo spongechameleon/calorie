@@ -1,18 +1,15 @@
 <script lang="ts">
-  import { mealsS } from "../stores";
-  import { deleteMeal, updateMeal } from "../actions/meal";
-
   import type { Meal } from "../types";
 
-  let meals: Meal[];
-  mealsS.subscribe((v) => {
-    meals = v;
-  });
+  export let title: string;
+  export let meals: Meal[];
+  export let updateMeal: Function;
+  export let deleteMeal: Function;
 
   let editId: number | undefined;
 </script>
 
-<h1>Today's Meals</h1>
+<h1>{title}</h1>
 <div class="grid">
   {#each meals as meal}
     <div>

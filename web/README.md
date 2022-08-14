@@ -1,3 +1,7 @@
+# Feature TO-DO
+- Sync with another web `count-dracula` when on the same network (WebRTC -> snapdrop?)
+- Redo the UX/UI
+
 # Svelte + TS + Vite
 
 This template should help get you started developing with Svelte and TypeScript in Vite.

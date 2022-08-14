@@ -3,20 +3,31 @@
 	import { SvelteToast } from "@zerodevx/svelte-toast";
 	import { getGoal } from "./actions/goal";
 	import { getMeals } from "./actions/meal";
+	import { getSavedMeals } from "./actions/savedMeal";
 
 	import Main from "./screens/Main.svelte";
+	import Config from "./screens/Config.svelte";
 
 	let toastOptions = {};
+	let goToConfig = false;
 
-	// load goal, meal history
 	onMount(() => {
 		getGoal();
 		getMeals();
+		getSavedMeals();
+
+		if (window.location.pathname === "/config") {
+			goToConfig = true;
+		}
 	});
 </script>
 
 <main>
-	<Main />
+	{#if goToConfig}
+		<Config />
+	{:else}
+		<Main />
+	{/if}
 </main>
 
 <SvelteToast options={toastOptions} />

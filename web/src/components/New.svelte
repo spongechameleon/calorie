@@ -1,21 +1,46 @@
 <script lang="ts">
-  import { addNewMeal } from "../actions/meal";
-
-  import type { MealDto } from "../types";
+  import { mkDateString, type Meal, type MealDto } from "../types";
   import { mkMealDto } from "../types";
+
+  export let title: string;
+  export let addMeal: Function;
+  export let autofillMeals: Meal[] | null;
 
   let newMealDto: MealDto = mkMealDto();
 
   let handleSubmit = async () => {
-    const r = await addNewMeal(newMealDto);
+    const r = await addMeal(newMealDto);
     if (r.ok) {
       // reset newMeal
       newMealDto = mkMealDto();
     }
   };
+
+  let handleAutofillChange = (e) => {
+    const v = JSON.parse(e.target.value);
+    if (v === null) {
+      newMealDto = {
+        name: "",
+        calories: 0,
+        protein: 0,
+        date: mkDateString(),
+      };
+    } else {
+      const { name, calories, protein } = v;
+      newMealDto = { name, calories, protein, date: mkDateString() };
+    }
+  };
 </script>
 
-<h1>New Meal</h1>
+<h1>{title}</h1>
+{#if autofillMeals && autofillMeals.length > 0}
+  <select name="" id="" on:change={handleAutofillChange}>
+    <option value={null}>-</option>
+    {#each autofillMeals as savedMeal}
+      <option value={JSON.stringify(savedMeal)}>{savedMeal.name}</option>
+    {/each}
+  </select>
+{/if}
 <form on:submit|preventDefault={handleSubmit} method="post">
   <label for="new-meal-name"
     >Name

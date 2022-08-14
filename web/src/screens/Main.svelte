@@ -3,6 +3,20 @@
   import New from "../components/New.svelte";
   import Overview from "../components/Overview.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
+  import { addMeal, deleteMeal, updateMeal } from "../actions/meal";
+
+  import type { Meal } from "../types";
+  import { mealsS, savedMealsS } from "../stores";
+
+  let meals: Meal[];
+  mealsS.subscribe((v) => {
+    meals = v;
+  });
+
+  let savedMeals: Meal[];
+  savedMealsS.subscribe((v) => {
+    savedMeals = v;
+  });
 </script>
 
 <section>
@@ -10,14 +24,15 @@
 </section>
 
 <section>
-  <New />
+  <New title="New Meal" {addMeal} autofillMeals={savedMeals} />
 </section>
 
 <section>
-  <History />
+  <History title="Today's Meals" {meals} {updateMeal} {deleteMeal} />
 </section>
 
 <button on:click={lsManualReset}>Reset data</button>
+<button on:click={() => (window.location.pathname = "/config")}>Config</button>
 
 <style>
   section {
