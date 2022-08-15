@@ -7,6 +7,7 @@
   import type { Meal } from "../types";
   import { mealsS, savedMealsS } from "../stores";
   import { goToConfig } from "../actions/page";
+  import Split from "./Split.svelte";
 
   let meals: Meal[];
   mealsS.subscribe((v) => {
@@ -19,23 +20,23 @@
   });
 </script>
 
-<section>
-  <Overview />
-</section>
-
-<section>
-  <New title="New Meal" {addMeal} autofillMeals={savedMeals} />
-</section>
-
-<section>
-  <History title="Today's Meals" {meals} {updateMeal} {deleteMeal} />
-</section>
-
-<button on:click={lsManualReset}>Reset data</button>
-<button on:click={goToConfig}>Config</button>
+<Split>
+  <Overview slot="TopLeft" />
+  <History
+    slot="BottomLeft"
+    title="Today's Meals"
+    {meals}
+    {updateMeal}
+    {deleteMeal}
+  />
+  <New slot="Right" title="Add Meal" {addMeal} autofillMeals={savedMeals} />
+  <svelte:fragment slot="Actions">
+    <button on:click={goToConfig}>Configuration -></button>
+    {#if window.location.hostname === "localhost"}
+      <button on:click={lsManualReset}>Reset data</button>
+    {/if}
+  </svelte:fragment>
+</Split>
 
 <style>
-  section {
-    margin-bottom: 5vh;
-  }
 </style>

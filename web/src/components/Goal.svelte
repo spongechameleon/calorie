@@ -40,17 +40,11 @@
   <button on:click={() => (edit = false)}>Cancel</button>
 {:else}
   <div>
-    <h2>Calories {goal.calories}</h2>
-    <h2>Protein {goal.protein}</h2>
+    <p>Calories {goal.calories}</p>
+    <p>Protein {goal.protein}</p>
     <button on:click={() => (edit = true)}>Edit</button>
   </div>
 {/if}
 
 <style>
-  h1 {
-    color: blue;
-  }
-  h2 {
-    font-weight: normal;
-  }
 </style>

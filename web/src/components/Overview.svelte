@@ -19,39 +19,40 @@
   });
 </script>
 
-<div class="grid">
-  <div>
-    <h1>Today's Goals</h1>
-    <h2>Calories {goal.calories}</h2>
-    <h2>Protein {goal.protein}</h2>
-  </div>
-
-  <div>
-    <h1>Today's Consumption</h1>
-    <h2>Calories {consumed.calories}</h2>
-    <h2>Protein {consumed.protein}</h2>
-  </div>
-
-  <div>
-    <h1>Today's Budget</h1>
-    <h2>
-      Calories {goal.calories - consumed.calories}
-    </h2>
-    <h2>
-      Protein {goal.protein - consumed.protein}
-    </h2>
-  </div>
-</div>
+<h1>Today's Totals</h1>
+<table>
+  <tr class="headers">
+    <th>Goal</th>
+    <th>Consumed</th>
+    <th>Remaining</th>
+  </tr>
+  <tr>
+    <td>{goal.calories} calories</td>
+    <td>{consumed.calories} calories</td>
+    <td>{goal.calories - consumed.calories} calories</td>
+  </tr>
+  <tr>
+    <td>{goal.protein} protein</td>
+    <td>{consumed.protein} protein</td>
+    <td>{goal.protein - consumed.protein} protein</td>
+  </tr>
+</table>
 
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  table {
+    margin: 0 auto;
+    background-color: rgba(228, 237, 255, 1);
+    background-color: #eee;
+    font-size: inherit;
   }
-  h1 {
-    color: blue;
+  th {
+    font-size: 1.2rem;
   }
-  h2 {
-    font-weight: normal;
+  th,
+  td {
+    padding: 1vh 3vw;
+  }
+  tr:nth-child(even) {
+    background-color: white;
   }
 </style>

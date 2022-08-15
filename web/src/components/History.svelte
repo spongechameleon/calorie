@@ -57,5 +57,7 @@
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    column-gap: 2vw;
+    row-gap: 2vh;
   }
 </style>
