@@ -10,11 +10,11 @@
   </div>
   <div class="right">
     <slot name="Right" />
-    <div class="actions">
-      <slot name="Actions" />
-    </div>
   </div>
 </section>
+<div class="actions">
+  <slot name="Actions" />
+</div>
 
 <style>
   section {
@@ -36,6 +36,8 @@
     grid-area: right;
   }
   .actions {
-    margin-top: 5vh;
+    position: absolute;
+    top: 2vh;
+    right: 12vw;
   }
 </style>

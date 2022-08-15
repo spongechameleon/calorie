@@ -50,9 +50,13 @@ input:disabled {
 }
 
 button {
-  color: #333;
+  color: #000;
   background-color: #f4f4f4;
   outline: none;
+}
+
+button:hover {
+  background-color: #d4d4d4;
 }
 
 button:disabled {
@@ -73,4 +77,13 @@ i {
   width: 14px;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.actionButton {
+  background-color: rgb(255, 249, 226);
+  width: 150px;
+}
+
+.actionButton:hover {
+  background-color: rgb(255, 238, 177);
 }
