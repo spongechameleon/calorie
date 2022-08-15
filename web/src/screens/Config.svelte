@@ -35,7 +35,7 @@
     autofillMeals={null}
   />
   <svelte:fragment slot="Actions">
-    <button on:click={goToMain}>Main -></button>
+    <button on:click={goToMain}><i class="home" /> Home</button>
     {#if window.location.hostname === "localhost"}
       <button on:click={lsManualReset}>Reset data</button>
     {/if}
@@ -43,4 +43,7 @@
 </Split>
 
 <style>
+  .home {
+    background-image: url("/public/home.png");
+  }
 </style>

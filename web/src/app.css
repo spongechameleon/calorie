@@ -66,3 +66,11 @@ button:not(:disabled):active {
 button:focus {
   border-color: #666;
 }
+
+i {
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}

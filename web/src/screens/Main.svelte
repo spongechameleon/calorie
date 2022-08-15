@@ -31,7 +31,7 @@
   />
   <New slot="Right" title="Add Meal" {addMeal} autofillMeals={savedMeals} />
   <svelte:fragment slot="Actions">
-    <button on:click={goToConfig}>Configuration -></button>
+    <button on:click={goToConfig}><i class="gear" /> Configuration</button>
     {#if window.location.hostname === "localhost"}
       <button on:click={lsManualReset}>Reset data</button>
     {/if}
@@ -39,4 +39,7 @@
 </Split>
 
 <style>
+  .gear {
+    background-image: url("/public/gear.png");
+  }
 </style>
