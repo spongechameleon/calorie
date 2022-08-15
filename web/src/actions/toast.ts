@@ -4,7 +4,7 @@ export function tSuccess(s: string) {
   toast.push(s, {
     theme: {
       '--toastBackground': '#48BB78',
-      '--toastBarBackground': '#2F855A'
+      '--toastBarBackground': '#48BB78'
     }
   })
 }
@@ -13,7 +13,7 @@ export function tError(s: string) {
   toast.push(s, {
     theme: {
       '--toastBackground': '#F56565',
-      '--toastBarBackground': '#C53030'
+      '--toastBarBackground': '#F56565'
     }
   })
 }

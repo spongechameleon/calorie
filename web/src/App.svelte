@@ -7,7 +7,11 @@
 	import { PAGES } from "./actions/page";
 	import { initData } from "./actions/init";
 
-	let toastOptions = {};
+	let toastOptions = {
+		duration: 2000,
+		reversed: true,
+		pausable: true,
+	};
 
 	initData();
 

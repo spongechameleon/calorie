@@ -1,3 +1,10 @@
+:root {
+  --toastContainerTop: auto;
+  --toastContainerRight: auto;
+  --toastContainerBottom: 8rem;
+  --toastContainerLeft: calc(50vw - 8rem);
+}
+
 html,
 body {
   position: relative;
