@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { mkDateString, type Meal, type MealDto } from "../types";
+  import {
+    mkDateString,
+    type Meal,
+    type MealDto,
+    type AddMeal,
+  } from "../types";
   import { mkMealDto } from "../types";
 
   export let title: string;
-  export let addMeal: Function;
+  export let addMeal: AddMeal;
   export let autofillMeals: Meal[] | null;
 
   let newMealDto: MealDto = mkMealDto();

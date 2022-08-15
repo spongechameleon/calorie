@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Meal } from "../types";
+  import type { Meal, UpdateMeal, DeleteMeal } from "../types";
 
   export let title: string;
   export let meals: Meal[];
-  export let updateMeal: Function;
-  export let deleteMeal: Function;
+  export let updateMeal: UpdateMeal;
+  export let deleteMeal: DeleteMeal;
 
   let editId: number | undefined;
 </script>

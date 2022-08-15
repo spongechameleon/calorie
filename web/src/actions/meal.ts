@@ -1,11 +1,11 @@
 import { mealsS } from "../stores";
-import type { Meal, MealDto, Result } from "../types";
+import type { AddMeal, DeleteMeal, GetMeals, Meal, UpdateMeal } from "../types";
 import { lsAddMeal, lsDeleteMeal, lsGetMeals, lsUpdateMeal } from "./persistence/localStorage";
 import { tError, tSuccess } from "./toast";
 
 // All functions act on persistence state, then on application state, e.g.
 
-export async function getMeals(): Promise<Result> {
+export const getMeals: GetMeals = async () => {
   // persistence
   const r = lsGetMeals()
   if (!r.ok) {
@@ -15,10 +15,11 @@ export async function getMeals(): Promise<Result> {
 
   // application
   mealsS.update(() => r.value)
+
   return { ok: true }
 }
 
-export async function addMeal(mealDto: MealDto): Promise<Result> {
+export const addMeal: AddMeal = async (mealDto) => {
   const r = lsAddMeal(mealDto)
   if (!r.ok) {
     tError(r.err ? r.err : "Error adding meal")
@@ -29,52 +30,57 @@ export async function addMeal(mealDto: MealDto): Promise<Result> {
     meals.push(r.value)
     return meals
   })
+
   tSuccess("Added meal")
   return { ok: true }
 }
 
-export async function updateMeal(meal: Meal): Promise<Result> {
+export const updateMeal: UpdateMeal = async (meal: Meal) => {
   const r = lsUpdateMeal(meal)
   if (!r.ok) {
     tError(r.err ? r.err : "Error updating meal")
     return { ...r, value: undefined }
   }
-
   const updatedMeal = r.value
-  let ok = true
+
   mealsS.update(meals => {
     const i = meals.findIndex(m => m.id === updatedMeal.id)
+
     if (i !== -1) {
       meals[i] = meal
-      tSuccess("Updated meal")
-    } else {
-      ok = false
-      tError("Unable to update meal")
+      return meals
     }
-    return meals
+
+    // local update fails, reload from persistence
+    const r = lsGetMeals()
+    return r.value
   })
-  return { ok }
+
+  tSuccess("Updated meal")
+  return { ok: true }
 }
 
-export async function deleteMeal(id: number): Promise<Result> {
+export const deleteMeal: DeleteMeal = async (id: number) => {
   const r = lsDeleteMeal(id)
   if (!r.ok) {
     tError(r.err ? r.err : "Error deleting meal")
     return { ...r, value: undefined }
   }
-
   const deletedId = r.value
-  let ok = true
+
   mealsS.update(meals => {
     const i = meals.findIndex(m => m.id === deletedId)
+
     if (i !== -1) {
       meals = meals.slice(0, i).concat(meals.slice(i + 1))
-      tSuccess("Deleted meal")
-    } else {
-      ok = false
-      tError("Unable to delete meal")
+      return meals
     }
-    return meals
+
+    // local update fails, reload from persistence
+    const r = lsGetMeals()
+    return r.value
   })
-  return { ok }
+
+  tSuccess("Deleted meal")
+  return { ok: true }
 }

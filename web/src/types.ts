@@ -25,6 +25,11 @@ export interface MealDto {
   date: DateString;
 }
 
+export type GetMeals = () => Promise<Result>;
+export type AddMeal = (mealDto: MealDto) => Promise<Result>;
+export type UpdateMeal = (meal: Meal) => Promise<Result>;
+export type DeleteMeal = (id: number) => Promise<Result>;
+
 export function mkMealDto(): MealDto {
   return {
     name: "",
