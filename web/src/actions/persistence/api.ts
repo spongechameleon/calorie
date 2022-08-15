@@ -1,3 +1,5 @@
+// Currently not used by anything, window.localStorage is default persistence
+
 import { goalS, mealsS } from "../../stores"
 import type { DateString, MealDto, Result } from "../../types"
 import { tError, tSuccess } from "../toast"
