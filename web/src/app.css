@@ -95,6 +95,11 @@ i {
   background-color: rgb(255, 238, 177);
 }
 
+.ratio {
+  color: #666;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 600px) {
   body {
     padding: 0;

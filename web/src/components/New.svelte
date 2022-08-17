@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { prec } from "../util";
+
   import {
     mkDateString,
     type Meal,
@@ -21,7 +23,7 @@
     }
   };
 
-  let handleAutofillChange = (e) => {
+  let handleAutofillChange = (e: any) => {
     const v = JSON.parse(e.target.value);
     if (v === null) {
       newMealDto = {
@@ -35,6 +37,14 @@
       newMealDto = { name, calories, protein, date: mkDateString() };
     }
   };
+
+  function displayRatio(n: number) {
+    const r = prec(n).toString();
+    if (r !== "NaN" && r !== "Infinity") {
+      return r;
+    }
+    return null;
+  }
 </script>
 
 <h1>{title}</h1>
@@ -73,6 +83,16 @@
       name="newMeal.protein"
       bind:value={newMealDto.protein}
       id="new-meal-protein"
+    />
+  </label>
+  <label for="new-meal-ratio" class="ratio"
+    >c/p
+    <input
+      class="ratio"
+      type="text"
+      value={displayRatio(newMealDto.calories / newMealDto.protein)}
+      id="new-meal-ratio"
+      disabled
     />
   </label>
   <input type="submit" value="Add Meal" />

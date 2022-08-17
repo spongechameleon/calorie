@@ -1,5 +1,4 @@
 # Feature To-Do
-- Add protein:calorie ratio row to Today's Totals table
 - Meal calculator
   - Should be able to add ingredients by [name, amount, calories, protein]
   - Should be able to specify amount used of ingredient, calculate totals via ratio

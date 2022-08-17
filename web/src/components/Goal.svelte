@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { prec } from "../util";
+
   import { updateGoal } from "../actions/goal";
   import { goalS } from "../stores";
   import type { Goal } from "../types";
@@ -42,6 +44,7 @@
   <div>
     <p>Calories {goal.calories}</p>
     <p>Protein {goal.protein}</p>
+    <p class="ratio">c/p {prec(goal.calories / goal.protein)}</p>
     <button on:click={() => (edit = true)}>Edit</button>
   </div>
 {/if}

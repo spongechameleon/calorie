@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { prec } from "../util";
+
   import type { Meal, UpdateMeal, DeleteMeal } from "../types";
 
   export let title: string;
@@ -18,6 +20,7 @@
         <h3>{meal.name}</h3>
         <p>Calories {meal.calories}</p>
         <p>Protein {meal.protein}</p>
+        <p class="ratio">c/p {prec(meal.calories / meal.protein)}</p>
         <button on:click={() => (editId = meal.id)}>Edit</button>
         <button on:click={() => deleteMeal(meal.id)}>Delete</button>
       {:else}

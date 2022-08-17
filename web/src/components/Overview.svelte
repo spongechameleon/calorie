@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { prec } from "../util";
+
   import { goalS, mealsS } from "../stores";
 
   import type { Goal, Meal } from "../types";
@@ -9,12 +11,17 @@
   });
 
   let consumed: Goal;
+  let remaining: Goal;
   let meals: Meal[];
   mealsS.subscribe((v) => {
     meals = v;
     consumed = {
       calories: meals.reduce((acc, meal) => acc + meal.calories, 0),
       protein: meals.reduce((acc, meal) => acc + meal.protein, 0),
+    };
+    remaining = {
+      calories: goal.calories - consumed.calories,
+      protein: goal.protein - consumed.protein,
     };
   });
 </script>
@@ -27,14 +34,19 @@
     <th>Remaining</th>
   </tr>
   <tr>
-    <td>{goal.calories} calories</td>
-    <td>{consumed.calories} calories</td>
-    <td>{goal.calories - consumed.calories} calories</td>
+    <td>Calories {goal.calories}</td>
+    <td>Calories {consumed.calories}</td>
+    <td>Calories {remaining.calories}</td>
   </tr>
   <tr>
-    <td>{goal.protein} protein</td>
-    <td>{consumed.protein} protein</td>
-    <td>{goal.protein - consumed.protein} protein</td>
+    <td>Protein {goal.protein}</td>
+    <td>Protein {consumed.protein}</td>
+    <td>Protein {remaining.protein}</td>
+  </tr>
+  <tr>
+    <td class="ratio">c/p {prec(goal.calories / goal.protein)}</td>
+    <td class="ratio">c/p {prec(consumed.calories / consumed.protein)}</td>
+    <td class="ratio">c/p {prec(remaining.calories / remaining.protein)}</td>
   </tr>
 </table>
 
