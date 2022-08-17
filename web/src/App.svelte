@@ -35,14 +35,20 @@
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
 		margin: 0 10vw;
 		background-color: white;
 	}
 
-	@media (min-width: 640px) {
+	@media (max-width: 1200px) {
 		main {
-			max-width: none;
+			margin: 0 8vw;
+		}
+	}
+
+	@media (max-width: 600px) {
+		main {
+			margin: 0;
+			border: 4px solid #ccc;
 		}
 	}
 </style>

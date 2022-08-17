@@ -40,4 +40,19 @@
     top: 2vh;
     right: 12vw;
   }
+
+	@media (max-width: 1200px) {
+    section {
+      grid-template-columns: 1fr;
+      grid-template-areas: "topLeft" "right" "bottomLeft";
+      padding-top: 6vh;
+    }
+  }
+
+	@media (max-width: 600px) {
+    .actions {
+      top: 1vh;
+      right: 8vw;
+    }
+  }
 </style>

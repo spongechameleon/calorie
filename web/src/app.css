@@ -94,3 +94,9 @@ i {
 .actionButton:hover {
   background-color: rgb(255, 238, 177);
 }
+
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+}

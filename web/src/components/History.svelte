@@ -60,4 +60,9 @@
     column-gap: 2vw;
     row-gap: 2vh;
   }
+  @media (max-width: 1200px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 </style>
