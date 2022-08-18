@@ -1,16 +1,15 @@
-import { mkDateString } from "../../types";
+import { mkDateString, type Id, type Ingredient, type IngredientDto } from "../../types";
 import type { Goal, Meal, MealDto, Result } from "../../types";
 
 const KEYS = {
+  goal: "goal",
   meal: "meals",
   savedMeals: "savedMeals",
-  goal: "goal",
+  savedIngredients: "savedIngredients",
 }
 
 export function lsManualReset() {
-  window.localStorage.removeItem(KEYS.goal)
-  window.localStorage.removeItem(KEYS.meal)
-  window.localStorage.removeItem(KEYS.savedMeals)
+  window.localStorage.clear()
   window.location.reload()
 }
 
@@ -31,96 +30,116 @@ export function lsUpdateGoal(goal: Goal): Result<Goal> {
 
 // MEAL
 export function lsGetMeals(): Result<Meal[]> {
-  return getMeals(KEYS.meal, true)
-}
-
-export function lsAddMeal(mealDto: MealDto): Result<Meal> {
-  return addMeal(mealDto, KEYS.meal, true)
-}
-
-export function lsUpdateMeal(meal: Meal): Result<Meal> {
-  return updateMeal(meal, KEYS.meal, true)
-}
-
-export function lsDeleteMeal(id: number): Result<number> {
-  return deleteMeal(id, KEYS.meal, true)
-}
-
-// SAVED MEAL
-export function lsGetSavedMeals(): Result<Meal[]> {
-  return getMeals(KEYS.savedMeals, false)
-}
-
-export function lsAddSavedMeal(mealDto: MealDto): Result<Meal> {
-  return addMeal(mealDto, KEYS.savedMeals, false)
-}
-
-export function lsUpdateSavedMeal(meal: Meal): Result<Meal> {
-  return updateMeal(meal, KEYS.savedMeals, false)
-}
-
-export function lsDeleteSavedMeal(id: number): Result<number> {
-  return deleteMeal(id, KEYS.savedMeals, false)
-}
-
-// MEAL GENERIC
-function getMeals(key: string, dailyReset: boolean): Result<Meal[]> {
-  let meals: Meal[] | null = JSON.parse(window.localStorage.getItem(key))
+  let meals: Meal[] | null = JSON.parse(window.localStorage.getItem(KEYS.meal))
   // If the first meal was on a different day, reset!
   if (
     meals === null
     || (
-      dailyReset
-      && typeof meals[0]?.date === "string"
+      typeof meals[0]?.date === "string"
       && meals[0]?.date !== mkDateString()
     )
   ) {
     meals = []
-    window.localStorage.setItem(key, JSON.stringify(meals))
+    window.localStorage.setItem(KEYS.meal, JSON.stringify(meals))
   }
   return { ok: true, value: meals }
 }
 
-function addMeal(mealDto: MealDto, key: string, dailyReset: boolean): Result<Meal> {
-  const r = getMeals(key, dailyReset)
+export function lsAddMeal(mealDto: MealDto): Result<Meal> {
+  return add(KEYS.meal, mealDto)
+}
+
+export function lsUpdateMeal(meal: Meal): Result<Meal> {
+  return update(KEYS.meal, meal)
+}
+
+export function lsDeleteMeal(id: number): Result<number> {
+  return remove(KEYS.meal, id)
+}
+
+// SAVED MEAL
+export function lsGetSavedMeals(): Result<Meal[]> {
+  return get(KEYS.savedMeals)
+}
+
+export function lsAddSavedMeal(mealDto: MealDto): Result<Meal> {
+  return add(KEYS.savedMeals, mealDto)
+}
+
+export function lsUpdateSavedMeal(meal: Meal): Result<Meal> {
+  return update(KEYS.savedMeals, meal)
+}
+
+export function lsDeleteSavedMeal(id: number): Result<number> {
+  return remove(KEYS.savedMeals, id)
+}
+
+// SAVED INGREDIENTS
+function lsGetSavedIngredients(): Result<Ingredient[]> {
+  return get(KEYS.savedIngredients)
+}
+
+function lsAddSavedIngredient(ingredientDto: IngredientDto): Result<Ingredient> {
+  return add(KEYS.savedIngredients, ingredientDto)
+}
+
+function lsUpdateSavedIngredient(ingredient: Ingredient): Result<Ingredient> {
+  return update(KEYS.savedIngredients, ingredient)
+}
+
+function lsRemoveSavedIngredient(id: number): Result<number> {
+  return remove(KEYS.savedIngredients, id)
+}
+
+// GENERIC
+function get<T>(key: string): Result<T[]> {
+  let items: T[] | null = JSON.parse(window.localStorage.getItem(key))
+  if (items === null) {
+    items = []
+    window.localStorage.setItem(key, JSON.stringify(items))
+  }
+  return { ok: true, value: items }
+}
+
+function add<T>(key: string, itemDto: T): Result<Id & T> {
+  const r = get<Id & T>(key)
   if (!r.ok) return { ...r, value: undefined }
 
-  const meals = r.value
-  meals.push(
+  const items = r.value
+  items.push(
     {
-      id: meals.length === 0 ? 1 : meals[meals.length - 1].id + 1,
-      ...mealDto
+      id: items.length === 0 ? 1 : items[items.length - 1].id + 1,
+      ...itemDto
     }
   )
-  window.localStorage.setItem(key, JSON.stringify(meals))
-  return { ok: true, value: meals[meals.length - 1] }
-
+  window.localStorage.setItem(key, JSON.stringify(items))
+  return { ok: true, value: items[items.length - 1] }
 }
 
-function updateMeal(meal: Meal, key: string, dailyReset: boolean): Result<Meal> {
-  const r = getMeals(key, dailyReset)
+function update<T extends Id>(key: string, item: T): Result<T> {
+  const r = get<T>(key)
   if (!r.ok) return { ...r, value: undefined }
 
-  const meals = r.value
-  const i = meals.findIndex(m => m.id === meal.id)
+  const items = r.value
+  const i = items.findIndex(it => it.id === item.id)
   if (i === -1) {
-    return { ok: false, err: "Meal not found" }
+    return { ok: false, err: `${key} item not found` }
   }
-  meals[i] = meal
-  window.localStorage.setItem(key, JSON.stringify(meals))
-  return { ok: true, value: meal }
+  items[i] = item
+  window.localStorage.setItem(key, JSON.stringify(items))
+  return { ok: true, value: item }
 }
 
-function deleteMeal(id: number, key: string, dailyReset: boolean): Result<number> {
-  const r = getMeals(key, dailyReset)
+function remove<T extends Id>(key: string, id: number): Result<number> {
+  const r = get<T>(key)
   if (!r.ok) return { ...r, value: undefined }
 
-  let meals = r.value
-  const i = meals.findIndex(m => m.id === id)
+  let items = r.value
+  const i = items.findIndex(it => it.id === id)
   if (i === -1) {
-    return { ok: false, err: "Meal not found" }
+    return { ok: false, err: `${key} item not found` }
   }
-  meals = meals.slice(0, i).concat(meals.slice(i + 1))
-  window.localStorage.setItem(key, JSON.stringify(meals))
+  items = items.slice(0, i).concat(items.slice(i + 1))
+  window.localStorage.setItem(key, JSON.stringify(items))
   return { ok: true, value: id }
 }

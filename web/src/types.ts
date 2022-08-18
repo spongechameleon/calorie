@@ -10,13 +10,11 @@ export function mkDateString(date?: Date) {
   return date ? date.toLocaleDateString() : new Date().toLocaleDateString()
 }
 
-export interface Meal {
+export interface Id {
   id: number;
-  name: string;
-  calories: number;
-  protein: number;
-  date: DateString;
 }
+
+export interface Meal extends Id, MealDto { }
 
 export interface MealDto {
   name: string;
@@ -42,4 +40,14 @@ export function mkMealDto(): MealDto {
 export interface Goal {
   calories: number;
   protein: number;
+}
+
+export interface Ingredient extends Id, IngredientDto { }
+
+export interface IngredientDto {
+  name: string;
+  servingAmount: number;
+  servingAmountUnit: string;
+  servingCalories: number;
+  servingProtein: number;
 }
