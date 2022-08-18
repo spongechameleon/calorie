@@ -47,7 +47,7 @@
   }
 </script>
 
-<h1>{title}</h1>
+<h1 class="sectionTitle">{title}</h1>
 {#if autofillMeals && autofillMeals.length > 0}
   <label for="saved">Saved Meals</label>
   <select name="saved" id="" on:change={handleAutofillChange}>

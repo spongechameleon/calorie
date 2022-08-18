@@ -26,7 +26,7 @@
   });
 </script>
 
-<h1>Today's Totals</h1>
+<h1 class="sectionTitle">Today's Totals</h1>
 <table>
   <tr class="headers">
     <th>Goal</th>
@@ -53,9 +53,8 @@
 <style>
   table {
     margin: 0 auto;
-    background-color: rgba(228, 237, 255, 1);
-    background-color: #eee;
     font-size: inherit;
+    border: 2px solid #ddd;
   }
   th {
     font-size: 1.2rem;
@@ -63,8 +62,17 @@
   th,
   td {
     padding: 1vh 3vw;
+    /* border: 2px solid #ddd; */
   }
   tr:nth-child(even) {
-    background-color: white;
+    background-color: rgba(238, 238, 238, 0.5);
+  }
+  tr th:first-child,
+  tr td:first-child {
+    border-right: 2px solid #ddd;
+  }
+  tr th:last-child,
+  tr td:last-child {
+    border-left: 2px solid #ddd;
   }
 </style>

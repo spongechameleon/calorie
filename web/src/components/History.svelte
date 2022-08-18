@@ -11,10 +11,10 @@
   let editId: number | undefined;
 </script>
 
-<h1>{title}</h1>
+<h1 class="sectionTitle">{title}</h1>
 <div class="grid">
   {#each meals as meal}
-    <div>
+    <div class="meal">
       {#if editId !== meal.id}
         <!-- Regular display -->
         <h3>{meal.name}</h3>
@@ -62,6 +62,10 @@
     grid-template-columns: repeat(3, 1fr);
     column-gap: 2vw;
     row-gap: 2vh;
+  }
+  .meal {
+    padding: 1vh 2vw;
+    border: 2px solid #ddd;
   }
   @media (max-width: 1200px) {
     .grid {

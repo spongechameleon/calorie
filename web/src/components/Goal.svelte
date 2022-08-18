@@ -13,7 +13,7 @@
   let edit = false;
 </script>
 
-<h1>Daily Goal</h1>
+<h1 class="sectionTitle">Daily Goal</h1>
 {#if edit}
   <label for="goal-calories"
     >Calories
