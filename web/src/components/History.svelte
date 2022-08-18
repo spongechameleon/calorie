@@ -25,7 +25,15 @@
         <button on:click={() => deleteMeal(meal.id)}>Delete</button>
       {:else}
         <!-- Editing display -->
-        <input type="text" name="meal.name" id="" bind:value={meal.name} />
+        <label for="meal-name"
+          >Name
+          <input
+            type="text"
+            name="meal.name"
+            bind:value={meal.name}
+            id="meal-name"
+          />
+        </label>
         <label for="meal-calories"
           >Calories
           <input
