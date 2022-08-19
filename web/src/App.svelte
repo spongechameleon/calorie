@@ -48,7 +48,7 @@
 	@media (max-width: 600px) {
 		main {
 			margin: 0;
-			border: 4px solid #ccc;
+			border: 2px solid #ccc;
 		}
 	}
 </style>
