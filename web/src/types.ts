@@ -14,6 +14,11 @@ export interface Id {
   id: number;
 }
 
+export interface Goal {
+  calories: number;
+  protein: number;
+}
+
 export interface Meal extends Id, MealDto { }
 
 export interface MealDto {
@@ -37,9 +42,10 @@ export function mkMealDto(): MealDto {
   }
 }
 
-export interface Goal {
-  calories: number;
-  protein: number;
+export enum ServingUnit {
+  gram = "g",
+  ounce = "oz",
+  milliliter = "ml",
 }
 
 export interface Ingredient extends Id, IngredientDto { }
@@ -47,7 +53,17 @@ export interface Ingredient extends Id, IngredientDto { }
 export interface IngredientDto {
   name: string;
   servingAmount: number;
-  servingAmountUnit: string;
+  servingAmountUnit: ServingUnit;
   servingCalories: number;
   servingProtein: number;
+}
+
+export function mkIngredientDto(): IngredientDto {
+  return {
+    name: "",
+    servingAmount: 0,
+    servingAmountUnit: ServingUnit.gram,
+    servingCalories: 0,
+    servingProtein: 0,
+  }
 }

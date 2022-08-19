@@ -42,7 +42,7 @@
 <h1 class="sectionTitle">{title}</h1>
 {#if autofillMeals && autofillMeals.length > 0}
   <label for="saved">Saved Meals</label>
-  <select name="saved" id="" on:change={handleAutofillChange}>
+  <select name="saved" id="saved" on:change={handleAutofillChange}>
     <option value={null}>-</option>
     {#each autofillMeals as savedMeal}
       <option value={JSON.stringify(savedMeal)}>{savedMeal.name}</option>

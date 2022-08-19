@@ -2,7 +2,7 @@
   import Goal from "../components/Goal.svelte";
   import History from "../components/meal/History.svelte";
   import Toggle from "../components/Toggle.svelte";
-  import New from "../components/meal/New.svelte";
+  import NewMeal from "../components/meal/New.svelte";
   import type { Ingredient, Meal } from "../types";
   import { savedIngredientsS, savedMealsS } from "../stores";
   import {
@@ -13,6 +13,7 @@
   import { goToMain } from "../actions/page";
   import Split from "./Split.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
+  import NewIngredient from "../components/ingredient/New.svelte";
 
   let showMeal = true;
   function toggleSwitch() {
@@ -43,7 +44,11 @@
 
   <div slot="Right">
     <Toggle {toggleSwitch} leftText="Meals" rightText="Ingredients" />
-    <New title="Save Meal" addMeal={addSavedMeal} autofillMeals={null} />
+    {#if showMeal}
+      <NewMeal title="Save Meal" addMeal={addSavedMeal} autofillMeals={null} />
+    {:else}
+      <NewIngredient title="Save Ingredient" autofillIngredients={null} />
+    {/if}
   </div>
 
   <svelte:fragment slot="Actions">
