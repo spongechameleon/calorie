@@ -1,7 +1,8 @@
 <script lang="ts">
-  import History from "../components/History.svelte";
-  import New from "../components/New.svelte";
   import Overview from "../components/Overview.svelte";
+  import History from "../components/meal/History.svelte";
+  import Toggle from "../components/Toggle.svelte";
+  import New from "../components/meal/New.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
   import { addMeal, deleteMeal, updateMeal } from "../actions/meal";
   import type { Meal } from "../types";
@@ -9,6 +10,10 @@
   import { goToConfig } from "../actions/page";
   import Split from "./Split.svelte";
 
+  let showMealEntry = true;
+  function toggleSwitch() {
+    showMealEntry = !showMealEntry;
+  }
   let meals: Meal[];
   mealsS.subscribe((v) => {
     meals = v;
@@ -22,6 +27,7 @@
 
 <Split>
   <Overview slot="TopLeft" />
+
   <History
     slot="BottomLeft"
     title="Today's Meals"
@@ -29,7 +35,12 @@
     {updateMeal}
     {deleteMeal}
   />
-  <New slot="Right" title="Add Meal" {addMeal} autofillMeals={savedMeals} />
+
+  <div slot="Right">
+    <Toggle {toggleSwitch} leftText="By Total" rightText="By Ingredient" />
+    <New title="Add Meal" {addMeal} autofillMeals={savedMeals} />
+  </div>
+
   <svelte:fragment slot="Actions">
     {#if window.location.hostname === "localhost"}
       <button on:click={lsManualReset} class="actionButton">Reset data</button>

@@ -1,26 +1,38 @@
 <script lang="ts">
-  import New from "../components/New.svelte";
-  import History from "../components/History.svelte";
-  import type { Meal } from "../types";
-  import { savedMealsS } from "../stores";
+  import Goal from "../components/Goal.svelte";
+  import History from "../components/meal/History.svelte";
+  import Toggle from "../components/Toggle.svelte";
+  import New from "../components/meal/New.svelte";
+  import type { Ingredient, Meal } from "../types";
+  import { savedIngredientsS, savedMealsS } from "../stores";
   import {
     addSavedMeal,
     deleteSavedMeal,
     updateSavedMeal,
   } from "../actions/savedMeal";
-  import Goal from "../components/Goal.svelte";
   import { goToMain } from "../actions/page";
   import Split from "./Split.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
+
+  let showMeal = true;
+  function toggleSwitch() {
+    showMeal = !showMeal;
+  }
 
   let savedMeals: Meal[];
   savedMealsS.subscribe((v) => {
     savedMeals = v;
   });
+
+  let savedIngredients: Ingredient[];
+  savedIngredientsS.subscribe((v) => {
+    savedIngredients = v;
+  });
 </script>
 
 <Split>
   <Goal slot="TopLeft" />
+
   <History
     slot="BottomLeft"
     title="Saved Meals"
@@ -28,12 +40,12 @@
     updateMeal={updateSavedMeal}
     deleteMeal={deleteSavedMeal}
   />
-  <New
-    slot="Right"
-    title="Save Meal"
-    addMeal={addSavedMeal}
-    autofillMeals={null}
-  />
+
+  <div slot="Right">
+    <Toggle {toggleSwitch} leftText="Meals" rightText="Ingredients" />
+    <New title="Save Meal" addMeal={addSavedMeal} autofillMeals={null} />
+  </div>
+
   <svelte:fragment slot="Actions">
     {#if window.location.hostname === "localhost"}
       <button on:click={lsManualReset} class="actionButton">Reset data</button>

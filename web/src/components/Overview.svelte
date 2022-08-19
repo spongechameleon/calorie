@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { prec } from "../util";
+  import { displayPrec } from "../util";
 
   import { goalS, mealsS } from "../stores";
 
@@ -44,9 +44,13 @@
     <td>Protein {remaining.protein}</td>
   </tr>
   <tr>
-    <td class="ratio">c/p {prec(goal.calories / goal.protein)}</td>
-    <td class="ratio">c/p {prec(consumed.calories / consumed.protein)}</td>
-    <td class="ratio">c/p {prec(remaining.calories / remaining.protein)}</td>
+    <td class="ratio">c/p {displayPrec(goal.calories / goal.protein)}</td>
+    <td class="ratio"
+      >c/p {displayPrec(consumed.calories / consumed.protein)}</td
+    >
+    <td class="ratio"
+      >c/p {displayPrec(remaining.calories / remaining.protein)}</td
+    >
   </tr>
 </table>
 

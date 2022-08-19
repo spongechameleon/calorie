@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { prec } from "../util";
+  import { displayPrec } from "../../util";
 
   import {
     mkDateString,
     type Meal,
     type MealDto,
     type AddMeal,
-  } from "../types";
-  import { mkMealDto } from "../types";
+  } from "../../types";
+  import { mkMealDto } from "../../types";
 
   export let title: string;
   export let addMeal: AddMeal;
@@ -37,14 +37,6 @@
       newMealDto = { name, calories, protein, date: mkDateString() };
     }
   };
-
-  function displayRatio(n: number) {
-    const r = prec(n).toString();
-    if (r !== "NaN" && r !== "Infinity") {
-      return r;
-    }
-    return null;
-  }
 </script>
 
 <h1 class="sectionTitle">{title}</h1>
@@ -90,7 +82,7 @@
     <input
       class="ratio"
       type="text"
-      value={displayRatio(newMealDto.calories / newMealDto.protein)}
+      value={displayPrec(newMealDto.calories / newMealDto.protein)}
       id="new-meal-ratio"
       disabled
     />
