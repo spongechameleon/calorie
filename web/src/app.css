@@ -105,6 +105,24 @@ i {
   padding: 1vh 5vw;
 }
 
+.historyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2vw;
+  row-gap: 2vh;
+}
+
+.historyGridItem {
+  padding: 1vh 2vw;
+  border: 2px solid #ddd;
+}
+
+@media (max-width: 1200px) {
+  .historyGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 600px) {
   body {
     padding: 0;

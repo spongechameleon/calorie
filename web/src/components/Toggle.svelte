@@ -4,14 +4,20 @@
   export let toggleSwitch: () => void;
 </script>
 
-<p class="inline">{leftText}</p>
-<label class="switch">
-  <input type="checkbox" on:change={() => toggleSwitch()} />
-  <span class="slider" />
-</label>
-<p class="inline">{rightText}</p>
+<div>
+  <p class="inline">{leftText}</p>
+  <label class="switch">
+    <input type="checkbox" on:change={() => toggleSwitch()} />
+    <span class="slider" />
+  </label>
+  <p class="inline">{rightText}</p>
+</div>
 
 <style>
+  div {
+    display: block;
+    margin-bottom: 2vh;
+  }
   .inline {
     display: inline;
   }

@@ -29,15 +29,15 @@
     } else {
       const {
         name,
-        servingAmount,
-        servingAmountUnit,
+        servingSize,
+        servingSizeUnit,
         servingCalories,
         servingProtein,
       } = v;
       newIngredientDto = {
         name,
-        servingAmount,
-        servingAmountUnit,
+        servingSize,
+        servingSizeUnit,
         servingCalories,
         servingProtein,
       };
@@ -65,17 +65,17 @@
       id="new-igr-name"
     />
   </label>
-  <label for="new-igr-serving-amount"
+  <label for="new-igr-serving-size"
     >Serving Size
     <input
       type="number"
-      name="newIgr.servingAmount"
-      bind:value={newIngredientDto.servingAmount}
-      id="new-igr-serving-amount"
+      name="newIgr.servingSize"
+      bind:value={newIngredientDto.servingSize}
+      id="new-igr-serving-size"
     />
   </label>
   <label for="new-igr-serving-unit">
-    <select name="newIgr.servingAmountUnit" id="new-igr-serving-unit">
+    <select name="newIgr.servingSizeUnit" id="new-igr-serving-unit">
       {#each Object.entries(ServingUnit) as [e, s]}
         <option value={e}>{s}</option>
       {/each}

@@ -52,8 +52,8 @@ export interface Ingredient extends Id, IngredientDto { }
 
 export interface IngredientDto {
   name: string;
-  servingAmount: number;
-  servingAmountUnit: ServingUnit;
+  servingSize: number;
+  servingSizeUnit: ServingUnit;
   servingCalories: number;
   servingProtein: number;
 }
@@ -61,8 +61,8 @@ export interface IngredientDto {
 export function mkIngredientDto(): IngredientDto {
   return {
     name: "",
-    servingAmount: 0,
-    servingAmountUnit: ServingUnit.gram,
+    servingSize: 0,
+    servingSizeUnit: ServingUnit.gram,
     servingCalories: 0,
     servingProtein: 0,
   }

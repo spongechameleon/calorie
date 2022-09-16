@@ -1,6 +1,6 @@
 <script lang="ts">
   import Goal from "../components/Goal.svelte";
-  import History from "../components/meal/History.svelte";
+  import MealHistory from "../components/meal/History.svelte";
   import Toggle from "../components/Toggle.svelte";
   import NewMeal from "../components/meal/New.svelte";
   import type { Ingredient, Meal } from "../types";
@@ -13,7 +13,12 @@
   import { goToMain } from "../actions/page";
   import Split from "./Split.svelte";
   import { lsManualReset } from "../actions/persistence/localStorage";
+  import IngredientHistory from "../components/ingredient/History.svelte";
   import NewIngredient from "../components/ingredient/New.svelte";
+  import {
+    removeSavedIngredient,
+    updateSavedIngredient,
+  } from "../actions/ingredient";
 
   let showMeal = true;
   function toggleSwitch() {
@@ -34,18 +39,33 @@
 <Split>
   <Goal slot="TopLeft" />
 
-  <History
-    slot="BottomLeft"
-    title="Saved Meals"
-    meals={savedMeals}
-    updateMeal={updateSavedMeal}
-    deleteMeal={deleteSavedMeal}
-  />
+  <svelte:fragment slot="BottomLeft">
+    {#if showMeal}
+      <MealHistory
+        title="Saved Meals"
+        meals={savedMeals}
+        updateMeal={updateSavedMeal}
+        deleteMeal={deleteSavedMeal}
+      />
+    {:else}
+      <IngredientHistory
+        title="Saved Ingredients"
+        ingredients={savedIngredients}
+        updateIngredient={updateSavedIngredient}
+        deleteIngredient={removeSavedIngredient}
+      />
+    {/if}
+  </svelte:fragment>
 
   <div slot="Right">
     <Toggle {toggleSwitch} leftText="Meals" rightText="Ingredients" />
     {#if showMeal}
-      <NewMeal title="Save Meal" addMeal={addSavedMeal} autofillMeals={null} />
+      <NewMeal
+        title="Save Meal"
+        addMeal={addSavedMeal}
+        autofillMeals={null}
+        autofillIngredients={savedIngredients}
+      />
     {:else}
       <NewIngredient title="Save Ingredient" autofillIngredients={null} />
     {/if}

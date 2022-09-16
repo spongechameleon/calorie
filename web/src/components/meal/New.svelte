@@ -6,12 +6,16 @@
     type Meal,
     type MealDto,
     type AddMeal,
+    type Ingredient,
   } from "../../types";
   import { mkMealDto } from "../../types";
+
+  import Toggle from "../../components/Toggle.svelte";
 
   export let title: string;
   export let addMeal: AddMeal;
   export let autofillMeals: Meal[] | null;
+  export let autofillIngredients: Ingredient[] | null;
 
   let newMealDto: MealDto = mkMealDto();
 
@@ -37,10 +41,16 @@
       newMealDto = { name, calories, protein, date: mkDateString() };
     }
   };
+
+  let byTotal = true;
+  function toggleSwitch() {
+    byTotal = !byTotal;
+  }
 </script>
 
 <h1 class="sectionTitle">{title}</h1>
-{#if autofillMeals && autofillMeals.length > 0}
+<Toggle {toggleSwitch} leftText="By Total" rightText="By Ingredient" />
+{#if byTotal && autofillMeals && autofillMeals.length > 0}
   <label for="saved">Saved Meals</label>
   <select name="saved" id="saved" on:change={handleAutofillChange}>
     <option value={null}>-</option>
@@ -50,43 +60,56 @@
   </select>
 {/if}
 <form on:submit|preventDefault={handleSubmit} method="post">
-  <label for="new-meal-name"
-    >Name
-    <input
-      type="text"
-      name="newMeal.name"
-      bind:value={newMealDto.name}
-      id="new-meal-name"
-    />
-  </label>
-  <label for="new-meal-calories"
-    >Calories
-    <input
-      type="number"
-      name="newMeal.calories"
-      bind:value={newMealDto.calories}
-      id="new-meal-calories"
-    />
-  </label>
-  <label for="new-meal-protein"
-    >Protein
-    <input
-      type="number"
-      name="newMeal.protein"
-      bind:value={newMealDto.protein}
-      id="new-meal-protein"
-    />
-  </label>
-  <label for="new-meal-ratio" class="ratio"
-    >c/p
-    <input
-      class="ratio"
-      type="text"
-      value={displayPrec(newMealDto.calories / newMealDto.protein)}
-      id="new-meal-ratio"
-      disabled
-    />
-  </label>
+  {#if byTotal}
+    <label for="new-meal-name"
+      >Name
+      <input
+        type="text"
+        name="newMeal.name"
+        bind:value={newMealDto.name}
+        id="new-meal-name"
+      />
+    </label>
+    <label for="new-meal-calories"
+      >Calories
+      <input
+        type="number"
+        name="newMeal.calories"
+        bind:value={newMealDto.calories}
+        id="new-meal-calories"
+      />
+    </label>
+    <label for="new-meal-protein"
+      >Protein
+      <input
+        type="number"
+        name="newMeal.protein"
+        bind:value={newMealDto.protein}
+        id="new-meal-protein"
+      />
+    </label>
+    <label for="new-meal-ratio" class="ratio"
+      >c/p
+      <input
+        class="ratio"
+        type="text"
+        value={displayPrec(newMealDto.calories / newMealDto.protein)}
+        id="new-meal-ratio"
+        disabled
+      />
+    </label>
+  {:else}
+    {#if autofillIngredients && autofillIngredients.length > 0}
+      <label for="saved">Saved Ingredients</label>
+      <select name="saved" id="saved" on:change={handleAutofillChange}>
+        <option value={null}>-</option>
+        {#each autofillIngredients as savedIgr}
+          <option value={JSON.stringify(savedIgr)}>{savedIgr.name}</option>
+        {/each}
+      </select>
+    {/if}
+    <h3>else</h3>
+  {/if}
   <input type="submit" value="Add Meal" />
 </form>
 

@@ -12,9 +12,9 @@
 </script>
 
 <h1 class="sectionTitle">{title}</h1>
-<div class="grid">
+<div class="historyGrid">
   {#each meals as meal}
-    <div class="meal">
+    <div class="historyGridItem">
       {#if editId !== meal.id}
         <!-- Regular display -->
         <h3>{meal.name}</h3>
@@ -65,19 +65,4 @@
 </div>
 
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 2vw;
-    row-gap: 2vh;
-  }
-  .meal {
-    padding: 1vh 2vw;
-    border: 2px solid #ddd;
-  }
-  @media (max-width: 1200px) {
-    .grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
 </style>

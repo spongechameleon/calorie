@@ -25,6 +25,7 @@
     justify-items: center;
     align-items: center;
     margin-bottom: 5vh;
+    min-height: 50vh;
   }
   .topLeft {
     grid-area: topLeft;
@@ -41,7 +42,7 @@
     right: 12vw;
   }
 
-	@media (max-width: 1200px) {
+  @media (max-width: 1200px) {
     section {
       grid-template-columns: 1fr;
       grid-template-areas: "topLeft" "right" "bottomLeft";
@@ -49,7 +50,7 @@
     }
   }
 
-	@media (max-width: 600px) {
+  @media (max-width: 600px) {
     .actions {
       top: 1vh;
       right: 8vw;
